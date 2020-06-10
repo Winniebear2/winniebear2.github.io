@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学生个人信息查询</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+         .third{
+            width: 100%;
+            background-color: black;
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+        .third a{
+            display: inline-flex;
+            color: white;
+            margin-left: 15px;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+			text-decoration: none;
+        }
+         .third a:hover{
+            background-color:teal;
+			text-decoration-line: underline;
+        }
+        th{ 
+            text-align: center;
+        }
+        td{
+            vertical-align: middle !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="third">
+        <a href="index.html">首页</a>
+    </div>
+    <div style="display: flex;justify-content: center;">
+        <div style="width: 300px;">
+            <h1>学生个人信息查询</h1>
+        </div>
+    </div>   
+    <div style="position: relative; left: 5px;" class="form-inline">
+        <button class="btn btn-danger" id="back">返回</button>
+        <select class="form-control" id="op">
+            <option value="name">姓名</option>
+            <option value="class">班别</option>
+            <option value="Cnumbers">学号</option>
+            <option value="date">出生日期</option>
+            <option value="Sclass">年级</option>
+            <option value="major">专业</option>
+            <option value="number">手机</option>
+            <option value="place">籍贯</option>
+        </select>
+        <input type="text" id="info" class="form-control">
+        <button class="btn btn-success" id="sub">提交</button>
+    </div>
+    <div>
+        <table class="table table-striped" style="text-align: center;" >
+            <thead>
+                <tr>
+                    <th>姓名</th>
+					<th>班别</th>
+					<th>学号</th>
+					<th>出生日期</th>
+					<th>性别</th>
+					<th>年级</th>
+					<th>专业</th>
+					<th>学院</th>
+					<th>手机</th>
+					<th>籍贯</th>
+					<th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="biao">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script>
+    var flag=1;
+    $.ajax({
+        type:"post",
+        url:"houtai.php",
+        async:true,
+        data:{
+            'flag':flag,
+        },
+        dataType:'json',
+        success:function(msg){
+            var str='';
+            for(var i=0;i<msg.length;i++){
+                str+='<tr>';
+                str+='<td>'+msg[i].Name+'</td>';
+                str+='<td>'+msg[i].class+'</td>';
+                str+='<td>'+msg[i].Cnumber+'</td>';
+                str+='<td>'+msg[i].date+'</td>';
+                str+='<td>'+msg[i].sex+'</td>';
+                str+='<td>'+msg[i].Sclass+'</td>';
+                str+='<td>'+msg[i].major+'</td>';
+                str+='<td>'+msg[i].college+'</td>';
+                str+='<td>'+msg[i].tel+'</td>';
+                str+='<td>'+msg[i].place+'</td>';
+                str+='<td><button class="btn btn-danger" onclick="del('+msg[i].Cnumber+')">删除</button></td>'
+                str+='</tr>';
+            }
+            // console.log(str);
+            $('#biao').html(str);
+        },
+        error:function(){
+            console.log("AJAX错误")
+        },
+    }); 
+    $("#back").click(function(){
+        location.href="index.html"
+    })
+    $("#sub").click(function(){
+        var info=$("#info").val();
+        // console.log(info);
+        var op =$("#op").val();
+        // console.log(op);
+        var flag=2;
+        $.ajax({
+            type:"post",
+            url:"houtai.php",
+            async:true,
+            data:{
+                'op':op,
+                'info':info,
+                'flag':flag,
+            },
+            dataType:'json',
+            success:function(msg){
+                var str='';
+                // console.log(msg);
+                for(var i=0;i<msg.length;i++){
+                    str+='<tr>';
+                    str+='<td>'+msg[i].Name+'</td>';
+                    str+='<td>'+msg[i].class+'</td>';
+                    str+='<td>'+msg[i].Cnumber+'</td>';
+                    str+='<td>'+msg[i].date+'</td>';
+                    str+='<td>'+msg[i].sex+'</td>';
+                    str+='<td>'+msg[i].Sclass+'</td>';
+                    str+='<td>'+msg[i].major+'</td>';
+                    str+='<td>'+msg[i].college+'</td>';
+                    str+='<td>'+msg[i].tel+'</td>';
+                    str+='<td>'+msg[i].place+'</td>';
+                    str+='<td><button class="btn btn-danger" onclick="del('+msg[i].Cnumber+')">删除</button></td>'
+                    str+='</tr>';
+                }
+                // console.log(str);
+                $("#biao").html(str);
+            },
+            error:function(){
+                console.log("AJAX error")
+            }
+        })
+    })
+    function del(Cnumber){
+        if(confirm("确定删除?")==false){
+            return;
+        }
+        else{
+        var flag = 4;
+        console.log('?')
+        console.log(Cnumber);
+        $.ajax({
+            type:"post",
+            url:"houtai.php",
+            async:'true',
+            data:{
+                'delCnumber':Cnumber,
+                'flag':flag,
+            },
+            dataType:'json',
+            success:function(msg){
+                alert(msg.status);
+                location.reload();
+            },
+            error:function(){
+                console.log("ajax error")
+            }
+        })
+        }
+    }
+</script>
+
+</html>

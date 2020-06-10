@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>学生个人信息采集</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .img_father{
+            height: 400px;
+			background: url(img/about_banner.png);
+            background-size: 1920px 400px;
+            width: 100%;
+			/* display: flex; */
+			/* justify-content: center;      
+			align-items: center; */
+            /* position: relative; */
+        }
+        .child{
+            /* position: relative;
+            width: 800px;
+            top: 150px; */
+			position: absolute;
+			top: 200px;
+			left: 0;
+			right: 0;
+			text-align: center;
+            margin:auto;
+            font-size: 50px;
+            color: seashell;
+            font-weight: 500;
+            font-family:"Microsoft YaHei";
+        }
+        .second{
+            display: flex; 
+            justify-content: space-around; 
+			position: absolute;
+			bottom: 0px;
+			top: 400px;
+			width: 100%;
+			/* background-color: gray; */
+        }
+        .third{
+			float: left;
+            width: 100%;
+            background-color: black;
+            height: 50px;
+            opacity: .9;
+            display: flex;
+            align-items: center;
+        }
+        .third a{
+            display: inline-flex;
+            color: white;
+            margin-left: 15px;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+			text-decoration: none;
+        }
+        .third a:hover{
+            background-color:teal;
+			text-decoration-line: underline;
+        }
+		.icon{
+			flex: 1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+		.icon:hover{
+			background-color: rgb(128, 128,128,.9);
+			cursor: pointer;
+			transition: 1200ms;
+		}
+		p{
+			font-size: 5vh;
+            color: black;
+            font-weight: 500;
+            font-family:"Microsoft YaHei";
+		}
+		.trans{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			height: 550px;
+			width: 800px;
+		}
+		.trans:hover{
+			transition: ease-out 0.3s;
+			transform: translateY(-8%);
+		}
+    </style>
+</head>
+<body>
+		<div class="third">
+			<a href="index.html">首页</a>
+		</div>
+        <div class="img_father">
+            <div class="child">学生个人信息采集中心</div>
+        </div>
+        <div class="second" id="test" >
+			<div style="border-right:black solid 2px;" id="collect" class="icon">
+				<div class="trans">
+					<img src="img/书本.png" alt="add_icon" width="100px">
+					<p>学生个人信息采集</p>
+				</div>
+			</div>
+			
+			<div style="border-left: black solid 2px;" class="icon" id="search">
+				<div class="trans">
+					<img src="img/查询.png" alt="search_icon" width="100px">
+					<p>学生个人信息查询</p>
+				</div>
+            </div>
+        </div>
+</body>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script>
+	// console.log(window.innerHeight);
+	// document.getElementById("test").style.height=window.innerHeight;
+	$("#collect").click( function(){ location.href="caiji.html";});
+	$("#search").click( function(){ location.href="search.html";});
+</script>
+</html>

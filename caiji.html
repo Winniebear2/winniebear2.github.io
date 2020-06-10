@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学生个人信息采集</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+     .third{
+			/* float: left; */
+            width: 100%;
+            background-color: black;
+            height: 50px;
+            opacity: .9;
+            display: flex;
+            align-items: center;
+        }
+    .third a{
+            display: inline-flex;
+            color: white;
+            margin-left: 15px;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+			text-decoration: none;
+        }
+    .third a:hover{
+            background-color:teal;
+			text-decoration-line: underline;
+        }
+   
+    </style>
+</head>
+<body>
+    <div class="third">
+        <a href="index.html">首页</a>
+    </div>
+    <div style="display: flex;justify-content: center;">
+        <div style="margin-top: 20px; width: 300px;">
+                <h1>学生个人信息采集</h1>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="Name">姓名：</label>
+                    <input type="text" id="Name" class="form-control" placeholder="姓名">
+                </div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="cla">班别：</label>
+                    <input type="text" id="cla" class="form-control" placeholder="班别">
+                </div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="Cnumber">学号：</label>
+                    <input type="text" id="Cnumber" class="form-control" placeholder="学号" maxlength="13">
+                </div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="date">出生日期：</label>
+                    <input type="text" id="date" class="form-control datetime input-sm" placeholder="yyyy/mm/dd">
+                </div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="sex">性别：</label>
+                    <input type="text" id="sex" class="form-control" placeholder="性别" list="da">
+                    <datalist id="da">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </datalist>
+                </div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="Sclass">年级：</label>
+                    <input type="text" id="Sclass" class="form-control" placeholder="年级">
+                </div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="major">专业：</label>
+                    <input type="text" id="major" class="form-control" placeholder="专业" list="majorlist">
+                    <datalist id="majorlist">
+                        <option value="通信工程">通信工程</option>
+                        <option value="电子信息工程">电子信息工程</option>
+                        <option value="电子科学与技术">电子科学与技术</option>
+                        <option value="计算机科学与技术">计算机科学与技术</option>
+                        <option value="软件工程">软件工程</option>
+                        <option value="网络工程">网络工程</option>
+                    </datalist>
+                </div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="tel">手机：</label>
+                    <input type="text" id="tel" class="form-control" placeholder="手机" maxlength="11">
+                </div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="place">籍贯：</label>
+                    <input type="text" id="place" class="form-control" placeholder="籍贯">
+                </div>
+                <div>
+                    <button style="float: left;" class="btn btn-success" onclick="sub()">提交</button>
+                    <button style="float: right;" class="btn btn-danger" onclick="goback()">返回</button>
+                </div>
+        </div>
+    </div>
+</body>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap-datetimepicker.min.js"></script>
+<script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script>
+    $("#date").datetimepicker({
+        autoclose:true,
+        format:"yyyy-mm-dd",
+        minView:"month",
+        language:"zh-CN"
+    })
+    function goback(){
+        history.back();
+    }
+    function sub(){
+        var flag = 3;
+		var Name = $("#Name").val();
+		var cla = $("#cla").val();
+        var Cnumber = $("#Cnumber").val()
+        var date = $("#date").val();
+        var sex = $("#sex").val();
+        var Sclass = $("#Sclass").val();
+        var major = $("#major").val();
+        var tel = $("#tel").val();
+        var place = $("#place").val();
+        if(Name==""||cla==""||Cnumber==""||date==""||sex==""||Sclass==""||major==""||tel==""||place==""){
+            alert("采集失败 请注意是否填写完整");
+            return;
+        }
+        if(major=="通信工程"||major=="电子信息工程"||major=="电子科学与技术"){
+            var college = "电子信息学院";
+        }
+        else if(major=="计算机科学与技术"||major=="软件工程"||major=="网络工程"){
+            var college = "计算机学院";
+        }
+        console.log(college);
+        $.ajax({
+            type:"post",
+            url:"houtai.php",
+            async:true,
+            data:{
+                'Name':Name,
+                'class':cla,
+                'Cnumber':Cnumber,
+                'date':date,
+                'sex':sex,
+                'Sclass':Sclass,
+                'major':major,
+                'tel':tel,
+                'place':place,
+                'college':college,
+                'flag':flag,
+            },
+            dataType:'json',
+            success:function(msg){
+                alert(msg.status);
+            },
+            error:function(){
+                console.log("AJAX错误")
+            },
+        });
+    }
+</script>
+</html>
