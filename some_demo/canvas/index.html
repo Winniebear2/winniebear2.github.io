@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body{
+        background-color: #000;
+      }
+      canvas{
+        background-color: #fff;
+      }
+      #kill{
+          background: url(./refresh.png);
+          width: 30px;
+          height: 30px;
+          background-size: 30px;
+          float: left;
+      }
+      #my_color{
+          height: 15px;
+          width: 30px;
+          border: 0px solid;
+          outline: none;
+      }
+    </style>
+
+  </head>
+  <body>
+    
+    <canvas id="my_canvas" width="800" height="800">
+      你的浏览器不支持canvas，请升级你的浏览器~
+    </canvas>
+    <div style="position:fixed;top: 20px;left: 10px;">
+        <div style="float: left;height: 30px;line-height: 30px;text-align: center;">
+        <input type="color" id="my_color" >
+        </div>
+        <div id="kill"></div>
+    </div>
+  </body>    
+  <script type="text/javascript">
+    
+    window.onload = function(){
+        let my_canvas = document.getElementById('my_canvas');
+        let paint = my_canvas.getContext('2d');
+        let pageWidth = document.documentElement.clientWidth;
+        let pageHeight = document.documentElement.clientHeight;
+        my_canvas.width = pageWidth;
+        my_canvas.height = pageHeight;
+        my_canvas.onmousedown=function(ev){
+        let preX = ev.offsetX
+        let preY = ev.offsetY;
+        document.onmousemove = function(ev){
+          if(ev.target !== my_canvas){
+            return;
+          }
+          //一旦调用了beginPath，就必须重新moveTo然后再lineTo
+          paint.beginPath();
+          paint.moveTo(preX,preY);
+          paint.lineTo(ev.offsetX,ev.offsetY);
+          preX=ev.offsetX,preY=ev.offsetY;
+          paint.lineWidth = 5;
+          paint.strokeStyle = document.getElementById('my_color').value;
+          paint.stroke();
+        }
+        document.onmouseup=function(){
+          document.onmousemove=null;
+        }
+      }
+      kill.onclick = function() {
+        paint.fillStyle = '#fff';
+        paint.fillRect(0,0,my_canvas.width,my_canvas.height);
+        console.log("kk");
+        };
+    }
+    </script>
+</html>

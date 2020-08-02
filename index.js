@@ -1,0 +1,19 @@
+$("#nav2").click(
+    function(){
+        $("#nav2").tab('show');
+        $("#inside_explore").attr("src","./some_demo/拼图/index.html")
+        // console.log("?????");
+    }
+);
+$("#nav3").click(
+    function(){
+        $("#nav3").tab('show');
+        $("#inside_explore").attr("src","./some_demo/canvas/index.html")
+    }
+);
+$("#nav1").click(
+    function(){
+        $("#nav1").tab('show');
+        $("#inside_explore").attr("src","./some_demo/别踩白块/index.html")
+    }
+);
