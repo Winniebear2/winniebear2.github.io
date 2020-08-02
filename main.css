@@ -7,7 +7,7 @@ body{
 }
 .img_father{
     height: 400px;
-    background: url(./信息采集/images/about_banner.png);
+    background: url(./info_collect/images/about_banner.png);
     background-size: 1920px 400px;
     width: 100%;
     /* display: flex; */
