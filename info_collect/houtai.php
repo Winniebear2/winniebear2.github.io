@@ -1,5 +1,5 @@
 <?php
-require("conn.php");
+require("./conn.php");
 $flag=$_POST['flag'];
 //  $flag = 1;
 if($flag==3){
